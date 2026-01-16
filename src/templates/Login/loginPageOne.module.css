@@ -1,0 +1,104 @@
+/* Common reset */
+.pageOne,
+.pageTwo,
+.pageThree,
+.pageFour,
+.pageFive {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Page One */
+.cardOne {
+  width: 350px;
+  text-align: center;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+.logoOne {
+  margin-bottom: 16px;
+  font-size: 40px;
+}
+
+/* Page Two */
+.pageTwo {
+  display: flex;
+  height: 100vh;
+}
+.leftTwo {
+  flex: 1;
+  background: linear-gradient(135deg, #1890ff, #70cfff);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+.rightTwo {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.formBoxTwo {
+  width: 320px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Page Three */
+.pageThree {
+  background: linear-gradient(120deg, #89f7fe, #66a6ff);
+}
+.glassCard {
+  width: 320px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Page Four */
+.pageFour {
+  flex-direction: column;
+}
+.formFour {
+  gap: 8px;
+}
+
+/* Page Five */
+.pageFive {
+  display: flex;
+  height: 100vh;
+}
+.heroLeft {
+  flex: 1;
+  background: #001529;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+.heroRight {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f2f5;
+}
+.formBoxFive {
+  width: 320px;
+  padding: 24px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}

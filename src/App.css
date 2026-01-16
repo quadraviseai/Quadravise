@@ -1,0 +1,128 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes wave {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(20deg);
+  }
+  40% {
+    transform: rotate(-15deg);
+  }
+  60% {
+    transform: rotate(10deg);
+  }
+  80% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.pulseContainer {
+  position: fixed; /* stays visible across pages */
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  border-radius: 50%;
+}
+
+/* rainbow glow */
+.pulseContainer::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180%;
+  height: 180%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: colorShift 8s infinite linear;
+  filter: blur(20px);
+  opacity: 0.9;
+  z-index: -1;
+}
+
+/* expanding pulse */
+.pulse-container::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(24, 144, 255, 0.5);
+  animation: pulse 3s infinite;
+  z-index: -2;
+}
+
+/* rainbow cycle */
+@keyframes colorShift {
+  0% {
+    background: radial-gradient(circle, #1890ff, #722ed1, #eb2f96);
+  }
+  25% {
+    background: radial-gradient(circle, #eb2f96, #fa8c16, #52c41a);
+  }
+  50% {
+    background: radial-gradient(circle, #52c41a, #13c2c2, #1890ff);
+  }
+  75% {
+    background: radial-gradient(circle, #fa8c16, #eb2f96, #722ed1);
+  }
+  100% {
+    background: radial-gradient(circle, #1890ff, #722ed1, #eb2f96);
+  }
+}
+
+/* expanding pulse ring */
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+.chatIcon {
+  background-color: #ff8e2e;
+}
