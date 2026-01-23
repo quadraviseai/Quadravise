@@ -5,7 +5,7 @@ import {
   Code,
   Brain,
   ShoppingCart,
-  TestTube,
+  Cloud,
   ArrowRight,
   CheckCircle,
 } from "lucide-react";
@@ -43,12 +43,13 @@ export default function Services() {
       color: "from-purple-500 to-purple-700",
     },
     {
-      title: "Automated QA Pipelines",
-      challenge: "Manual testing is slow and error-prone.",
+      title: "SaaS Web Services",
+      challenge:
+        "Scaling a SaaS requires architecture that handles multi-tenancy and subscription complexities seamlessly.",
       solution:
-        "Self-healing E2E test suites that run on every commit. If it breaks, you know instantly.",
-      tags: ["Playwright", "Allure", "CI/CD", "Docker"],
-      icon: TestTube,
+        "Scalable multi-tenant architectures with built-in subscription management and role-based access control.",
+      tags: ["Multi-tenant", "Stripe Connect", "AWS Lambda", "Next.js"],
+      icon: Cloud,
       color: "from-brand-success to-green-600",
     },
   ];
@@ -260,11 +261,10 @@ export default function Services() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -5 }}
-                className={`relative bg-white rounded-2xl p-8 shadow-lg shadow-trust-200/20 hover:shadow-xl transition-all duration-300 ${
-                  model.popular
+                className={`relative bg-white rounded-2xl p-8 shadow-lg shadow-trust-200/20 hover:shadow-xl transition-all duration-300 ${model.popular
                     ? "ring-2 ring-brand-primary"
                     : "border border-trust-200"
-                }`}
+                  }`}
               >
                 {model.popular && (
                   <motion.div

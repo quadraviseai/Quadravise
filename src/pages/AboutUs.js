@@ -6,8 +6,8 @@ import {
   Eye,
   Users,
   Code,
-  Palette,
   Cog,
+
   MapPin,
   Calendar,
   ArrowRight,
@@ -30,7 +30,7 @@ export default function AboutUs() {
     },
     {
       title: "Speed of Thought",
-      description: "Intent > Syntax. Vibe Coding.",
+      description: "Intent > Syntax.",
       icon: Target,
       color: "from-purple-500 to-purple-700",
     },
@@ -44,15 +44,15 @@ export default function AboutUs() {
       color: "from-brand-primary to-orange-600",
     },
     {
-      title: "Automation Architects",
-      description: "Specialists in CI/CD, testing, and self-healing systems",
+      title: "Backend Systems Engineers",
+      description: "Architects of scalable APIs, microservices, and high-performance databases",
       icon: Cog,
       color: "from-brand-accent to-blue-600",
     },
     {
-      title: "UI/UX Designers",
-      description: "Creators of intuitive, beautiful user experiences",
-      icon: Palette,
+      title: "AI Integration Specialists",
+      description: "Experts in LLMs, RAG pipelines, and intelligent agent systems",
+      icon: Eye,
       color: "from-purple-500 to-purple-700",
     },
   ];
@@ -176,7 +176,7 @@ export default function AboutUs() {
                 <div className="flex items-center space-x-3 mb-6">
                   <MapPin className="h-6 w-6 text-brand-primary" />
                   <span className="text-lg font-semibold text-trust-900">
-                    Cyber City, Gurugram, India
+                    Konappana Agrahara, Electronic City, 560100 Bengaluru, Karnataka, India
                   </span>
                 </div>
 
@@ -197,12 +197,7 @@ export default function AboutUs() {
                       AI-Augmented Engineering
                     </span>
                   </div>
-                  <div className="flex items-center justify-between py-3">
-                    <span className="text-trust-600">Mission</span>
-                    <span className="font-semibold text-trust-900">
-                      Vibe Coding
-                    </span>
-                  </div>
+
                 </div>
               </div>
             </motion.div>

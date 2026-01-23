@@ -61,29 +61,12 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? "bg-trust-900/95 backdrop-blur-md shadow-lg shadow-trust-900/20 border-b border-trust-700"
           : "bg-transparent"
-      }`}
+        }`}
     >
-      {/* Floating Code Elements */}
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 1, duration: 0.8 }}
-        className="absolute top-2 left-20 text-brand-primary/20 font-mono text-xs hidden xl:block"
-      >
-        nav.active = true;
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute top-2 right-20 text-brand-accent/20 font-mono text-xs hidden xl:block"
-      >
-        header.render();
-      </motion.div>
+
       <nav className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
@@ -159,18 +142,16 @@ export default function Header() {
 
             <Link
               to="/products"
-              className={`text-sm font-medium transition-colors hover:text-brand-primary ${
-                isActive("/products") ? "text-brand-primary" : "text-trust-300"
-              }`}
+              className={`text-sm font-medium transition-colors hover:text-brand-primary ${isActive("/products") ? "text-brand-primary" : "text-trust-300"
+                }`}
             >
               Products
             </Link>
 
             <Link
               to="/aboutUs"
-              className={`text-sm font-medium transition-colors hover:text-brand-primary ${
-                isActive("/aboutUs") ? "text-brand-primary" : "text-trust-300"
-              }`}
+              className={`text-sm font-medium transition-colors hover:text-brand-primary ${isActive("/aboutUs") ? "text-brand-primary" : "text-trust-300"
+                }`}
             >
               About
             </Link>
