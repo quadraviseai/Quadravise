@@ -42,9 +42,7 @@ export default function DashboardPage() {
       setSalesData(salesRes);
       setPipelineData(pipelineRes);
       setTaskData(taskRes);
-    } catch (error) {
-      console.error("Failed to fetch dashboard data:", error);
-    } finally {
+    } catch (error) {} finally {
       setLoading(false);
     }
   };

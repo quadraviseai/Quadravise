@@ -28,9 +28,7 @@ export default function CookieBanner() {
     };
     localStorage.setItem("cookiePreferences", JSON.stringify(allAccepted));
     localStorage.setItem("cookieConsent", "all");
-    setShowBanner(false);
-    console.log("All cookies accepted");
-    // Tracking scripts will load on next page reload or as configured
+    setShowBanner(false);// Tracking scripts will load on next page reload or as configured
   };
 
   const handleRejectAll = () => {
@@ -42,9 +40,7 @@ export default function CookieBanner() {
     };
     localStorage.setItem("cookiePreferences", JSON.stringify(onlyEssential));
     localStorage.setItem("cookieConsent", "essential-only");
-    setShowBanner(false);
-    console.log("Only essential cookies enabled");
-  };
+    setShowBanner(false);};
 
   const handleCustomize = () => {
     setShowModal(true);

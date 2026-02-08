@@ -17,7 +17,7 @@ function getCookie(name) {
 }
 
 const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1',
+    baseURL: process.env.REACT_APP_API_URL || '/api/v1',
     withCredentials: true, // Important for session cookies
 });
 
@@ -44,9 +44,8 @@ api.interceptors.response.use(
     (error) => {
         if (error.response && error.response.status === 401) {
             // Handle unauthorized access (e.g., redirect to login)
-            // This is better handled in AuthContext or a global event, 
+            // This is better handled in AuthContext or a global event,
             // but we can reject here to handle locally.
-            console.warn('Unauthorized access - 401');
         }
         return Promise.reject(error);
     }

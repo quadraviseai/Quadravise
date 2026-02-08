@@ -21,9 +21,7 @@ export default function TaskForm({
             try {
                 const data = await usersAPI.getUsers();
                 setUsers(data.results || data);
-            } catch (error) {
-                console.error("Error fetching users:", error);
-            } finally {
+            } catch (error) {} finally {
                 setLoadingUsers(false);
             }
         };

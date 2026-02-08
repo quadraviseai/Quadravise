@@ -28,9 +28,7 @@ export default function ContactsPage() {
       if (contactList.length > 0 && !selectedContactId) {
         setSelectedContactId(contactList[0].id);
       }
-    } catch (error) {
-      console.error("Error fetching contacts:", error);
-      message.error("Failed to load contacts");
+    } catch (error) {message.error("Failed to load contacts");
     } finally {
       setLoading(false);
     }
@@ -61,9 +59,7 @@ export default function ContactsPage() {
       }
       setIsCreateModalOpen(false);
       setIsEditing(false);
-    } catch (error) {
-      console.error("Error saving contact:", error);
-      message.error(`Failed to ${isEditing ? 'update' : 'create'} contact`);
+    } catch (error) {message.error(`Failed to ${isEditing ? 'update' : 'create'} contact`);
     }
   };
 

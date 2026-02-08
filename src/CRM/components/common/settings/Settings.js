@@ -24,18 +24,12 @@ export default function SettingsPage() {
     language: "English",
   });
 
-  function saveProfile() {
-    console.log("Save profile", profile);
+  function saveProfile() {}
+
+  function changePassword() {setPassword({ current: "", next: "" });
   }
 
-  function changePassword() {
-    console.log("Change password", password);
-    setPassword({ current: "", next: "" });
-  }
-
-  function deleteAccount() {
-    console.log("Delete account");
-  }
+  function deleteAccount() {}
 
   return (
     <div className="space-y-8 max-w-3xl">

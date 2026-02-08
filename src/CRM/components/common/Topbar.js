@@ -77,9 +77,7 @@ export default function Topbar({ onToggle }) {
     try {
       await logout();
       navigate('/');
-    } catch (error) {
-      console.error("Logout failed", error);
-    }
+    } catch (error) {}
   };
 
   const getUserInitials = () => {

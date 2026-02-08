@@ -74,9 +74,7 @@ export default function AccountDetailsPage() {
             setContacts(contactsRes.results || contactsRes); // Handle pagination structure if any
             setDeals(dealsRes.results || dealsRes);
             setTasks(tasksRes.results || tasksRes);
-        } catch (error) {
-            console.error("Error fetching account data:", error);
-            message.error("Failed to load account details");
+        } catch (error) {message.error("Failed to load account details");
         } finally {
             setLoading(false);
         }
@@ -89,9 +87,7 @@ export default function AccountDetailsPage() {
             message.success("Account updated successfully");
             fetchAccountData();
             setIsEditModalOpen(false);
-        } catch (error) {
-            console.error("Error updating account:", error);
-            message.error("Failed to update account");
+        } catch (error) {message.error("Failed to update account");
         }
     };
 
@@ -101,9 +97,7 @@ export default function AccountDetailsPage() {
             message.success("Contact created successfully");
             setIsContactModalOpen(false);
             fetchAccountData();
-        } catch (error) {
-            console.error("Error creating contact:", error);
-            message.error("Failed to create contact");
+        } catch (error) {message.error("Failed to create contact");
         }
     };
 
@@ -118,9 +112,7 @@ export default function AccountDetailsPage() {
             message.success("Deal created successfully");
             setIsDealModalOpen(false);
             fetchAccountData();
-        } catch (error) {
-            console.error("Error creating deal:", error);
-            message.error("Failed to create deal");
+        } catch (error) {message.error("Failed to create deal");
         }
     };
 
@@ -136,9 +128,7 @@ export default function AccountDetailsPage() {
             fetchAccountData();
             // Reset task form
             setNewTask({ title: "", description: "", type: "General", priority: "Medium", status: "To Do", dueDate: "", assignee: "Me" });
-        } catch (error) {
-            console.error("Error creating task:", error);
-            message.error("Failed to create task");
+        } catch (error) {message.error("Failed to create task");
         }
     };
 

@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-lm)$k^@_9nc!7zea^iu8qh^+hm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = [h for h in os.getenv('ALLOWED_HOSTS', '').split(',') if h]
 
 
 # Application definition
@@ -98,8 +98,9 @@ DATABASES = {
     }
 }
 
-print(f"DEBUG SETTINGS: Configured Database Name: {DATABASES['default']['NAME']}")
-print(f"DEBUG SETTINGS: Configured Database Host: {DATABASES['default']['HOST']}")
+if DEBUG:
+    print(f"DEBUG SETTINGS: Configured Database Name: {DATABASES['default']['NAME']}")
+    print(f"DEBUG SETTINGS: Configured Database Host: {DATABASES['default']['HOST']}")
 
 
 # Password validation

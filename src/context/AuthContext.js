@@ -17,15 +17,9 @@ export const AuthProvider = ({ children }) => {
 
     const checkUserLoggedIn = async () => {
         try {
-            const { data } = await api.get('/auth/me/');
-            console.log("AuthContext: User data fetched", data);
-            setUser(data);
-        } catch (error) {
-            console.error("AuthContext: User check failed", error);
-            setUser(null);
-        } finally {
-            console.log("AuthContext: Finished loading");
-            setIsLoading(false);
+            const { data } = await api.get('/auth/me/');setUser(data);
+        } catch (error) {setUser(null);
+        } finally {setIsLoading(false);
         }
     };
 
@@ -54,9 +48,7 @@ export const AuthProvider = ({ children }) => {
             await api.post('/auth/logout/');
             setUser(null);
             navigate('/login');
-        } catch (error) {
-            console.error('Logout failed', error);
-        }
+        } catch (error) {}
     };
 
     return (

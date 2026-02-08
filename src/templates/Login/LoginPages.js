@@ -7,9 +7,7 @@ import styles from "./loginPageOne.module.css";
 --------------------------------------------------- */
 const handleSubmit = (e) => {
   e.preventDefault();
-  const formData = new FormData(e.target);
-  console.log("Login success:", Object.fromEntries(formData));
-};
+  const formData = new FormData(e.target);};
 
 /* ===================================================
    LOGIN PAGE ONE

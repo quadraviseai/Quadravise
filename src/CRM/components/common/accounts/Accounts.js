@@ -57,9 +57,7 @@ export default function AccountsPage() {
         setAccounts(Array.isArray(data) ? data : []);
         setTotalCount(Array.isArray(data) ? data.length : 0);
       }
-    } catch (error) {
-      console.error("Error fetching accounts:", error);
-      message.error("Failed to load accounts");
+    } catch (error) {message.error("Failed to load accounts");
     } finally {
       setLoading(false);
     }
@@ -97,9 +95,7 @@ export default function AccountsPage() {
       setIsModalOpen(false);
       setEditingAccount(null);
       fetchAccounts(); // Refresh list
-    } catch (error) {
-      console.error("Error saving account:", error);
-      message.error("Failed to save account");
+    } catch (error) {message.error("Failed to save account");
     }
   };
 
@@ -118,9 +114,7 @@ export default function AccountsPage() {
       await accountsAPI.deleteAccount(id);
       message.success("Account deleted successfully!");
       fetchAccounts(); // Refresh
-    } catch (error) {
-      console.error("Error deleting account:", error);
-      message.error("Failed to delete account");
+    } catch (error) {message.error("Failed to delete account");
     }
   };
 

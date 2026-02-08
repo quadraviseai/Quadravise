@@ -64,9 +64,7 @@ export default function CookiePreferencesModal({ isOpen, onClose }) {
   const handleSave = () => {
     localStorage.setItem("cookiePreferences", JSON.stringify(preferences));
     localStorage.setItem("cookieConsent", "custom");
-    onClose();
-    console.log("Cookie preferences saved:", preferences);
-  };
+    onClose();};
 
   const handleAcceptAll = () => {
     const allAccepted = {
@@ -78,9 +76,7 @@ export default function CookiePreferencesModal({ isOpen, onClose }) {
     setPreferences(allAccepted);
     localStorage.setItem("cookiePreferences", JSON.stringify(allAccepted));
     localStorage.setItem("cookieConsent", "all");
-    onClose();
-    console.log("All cookies accepted");
-  };
+    onClose();};
 
   const handleRejectAll = () => {
     const onlyEssential = {
@@ -92,9 +88,7 @@ export default function CookiePreferencesModal({ isOpen, onClose }) {
     setPreferences(onlyEssential);
     localStorage.setItem("cookiePreferences", JSON.stringify(onlyEssential));
     localStorage.setItem("cookieConsent", "essential-only");
-    onClose();
-    console.log("Only essential cookies enabled");
-  };
+    onClose();};
 
   if (!isOpen) return null;
 

@@ -46,22 +46,12 @@ export default function TasksPage() {
       // Basic filtering params
       const params = {};
       if (scope === 'me') params.assigned_to = 'me';
+
       // Time filter logic could be added here or kept client-side for now
-
-      console.log('[TasksPage] Fetching tasks with params:', params);
-      console.log('[TasksPage] Current scope:', scope);
-      console.log('[TasksPage] Is Admin:', isAdmin);
-
       const response = await tasksAPI.getTasks(params);
-
-      console.log('[TasksPage] API Response:', response);
 
       // Handle paginated response - API returns {count, results} or just an array
       const data = response.results || response;
-
-      console.log('[TasksPage] Fetched tasks from API:', data);
-
-      // Map API data to UI format
       const formattedTasks = data.map(task => ({
         id: task.id,
         title: task.title,
@@ -80,12 +70,8 @@ export default function TasksPage() {
         // Keep original fields for editing
         original: task
       }));
-
-      console.log('[TasksPage] Formatted tasks for UI:', formattedTasks);
-
       setTasks(formattedTasks);
     } catch (error) {
-      console.error("Error fetching tasks:", error);
       message.error("Failed to load tasks");
     } finally {
       setLoading(false);
@@ -110,9 +96,6 @@ export default function TasksPage() {
     // Add more time filters as needed
     return true;
   });
-
-  console.log('[TasksPage] Filtered tasks:', filteredTasks);
-  console.log('[TasksPage] Filtered tasks count:', filteredTasks.length);
 
   // --- Handlers ---
 
@@ -154,7 +137,6 @@ export default function TasksPage() {
       await fetchTasks();
       resetForm();
     } catch (error) {
-      console.error("Error saving task:", error);
       message.error("Failed to save task");
     }
   };

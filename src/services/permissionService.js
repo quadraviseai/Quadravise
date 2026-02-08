@@ -27,9 +27,7 @@ export const permissionService = {
             // Cache it
             localStorage.setItem(PERMISSIONS_KEY, JSON.stringify(data));
             return data;
-        } catch (error) {
-            console.warn("Failed to fetch permissions from backend, using cache", error);
-            const stored = localStorage.getItem(PERMISSIONS_KEY);
+        } catch (error) {const stored = localStorage.getItem(PERMISSIONS_KEY);
             return stored ? JSON.parse(stored) : DEFAULT_PERMISSIONS;
         }
     },
@@ -43,9 +41,7 @@ export const permissionService = {
             // Update cache
             localStorage.setItem(PERMISSIONS_KEY, JSON.stringify(permissions));
             return true;
-        } catch (error) {
-            console.error("Failed to save permissions to backend", error);
-            throw error;
+        } catch (error) {throw error;
         }
     },
 
@@ -63,9 +59,7 @@ export const permissionService = {
         if (stored) {
             try {
                 allPerms = JSON.parse(stored);
-            } catch (e) {
-                console.error("Error parsing permissions", e);
-                allPerms = DEFAULT_PERMISSIONS;
+            } catch (e) {allPerms = DEFAULT_PERMISSIONS;
             }
         } else {
             allPerms = DEFAULT_PERMISSIONS;
@@ -84,9 +78,7 @@ export const permissionService = {
             // Refresh cache
             await permissionService.getAllPermissions();
             return true;
-        } catch (error) {
-            console.error("Failed to rename role", error);
-            throw error;
+        } catch (error) {throw error;
         }
     },
 
@@ -99,9 +91,7 @@ export const permissionService = {
             // Refresh cache
             await permissionService.getAllPermissions();
             return true;
-        } catch (error) {
-            console.error("Failed to delete role", error);
-            throw error;
+        } catch (error) {throw error;
         }
     },
 

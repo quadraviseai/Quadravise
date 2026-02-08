@@ -53,9 +53,7 @@ export default function UsersPage() {
             }));
 
             setUsers(enrichedData);
-        } catch (error) {
-            console.error("Failed to fetch users", error);
-            message.error("Failed to load users from server");
+        } catch (error) {message.error("Failed to load users from server");
             setUsers([]); // Clear users on error instead of using dummy data
         } finally {
             setLoading(false);
@@ -204,9 +202,7 @@ export default function UsersPage() {
             }
 
             resetForm();
-        } catch (error) {
-            console.error("Failed to save user", error);
-            message.error(`Failed to ${editingUserId ? "update" : "create"} user`);
+        } catch (error) {message.error(`Failed to ${editingUserId ? "update" : "create"} user`);
         }
     };
 
