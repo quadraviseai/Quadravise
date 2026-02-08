@@ -2,6 +2,7 @@
   "name": "quadravise-view",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://quadravise.com",
   "dependencies": {
     "@tanstack/react-query": "^5.90.2",
     "@tanstack/react-query-devtools": "^5.90.2",

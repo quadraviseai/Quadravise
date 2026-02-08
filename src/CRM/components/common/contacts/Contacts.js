@@ -28,7 +28,8 @@ export default function ContactsPage() {
       if (contactList.length > 0 && !selectedContactId) {
         setSelectedContactId(contactList[0].id);
       }
-    } catch (error) {message.error("Failed to load contacts");
+    } catch (error) {
+      message.error("Failed to load contacts");
     } finally {
       setLoading(false);
     }
@@ -59,14 +60,15 @@ export default function ContactsPage() {
       }
       setIsCreateModalOpen(false);
       setIsEditing(false);
-    } catch (error) {message.error(`Failed to ${isEditing ? 'update' : 'create'} contact`);
+    } catch (error) {
+      message.error(`Failed to ${isEditing ? 'update' : 'create'} contact`);
     }
   };
 
   const selectedContact = contacts.find(c => c.id === selectedContactId);
 
   return (
-    <div className="flex h-[calc(100vh-64px)] overflow-hidden bg-white p-4 gap-4 font-lato">
+    <div className="flex h-full overflow-hidden bg-white p-4 gap-4 font-lato">
       {/* Sidebar List */}
       <ContactList
         contacts={contacts}

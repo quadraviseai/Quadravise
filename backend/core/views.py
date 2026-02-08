@@ -584,3 +584,38 @@ class DashboardViewSet(viewsets.ViewSet):
             "by_priority": tasks_by_priority
         })
 
+
+class AIViewSet(viewsets.ViewSet):
+    """
+    ViewSet for AI-powered features.
+    Currently uses mock responses until LLM integration.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    @action(detail=False, methods=['post'])
+    def analyze_mom(self, request):
+        """
+        Analyze Meeting Minutes content.
+        """
+        content = request.data.get('content', '')
+        # Mock Response
+        return Response({
+            "summary": "This is a mock AI summary of the meeting minutes.",
+            "action_items": [
+                "Action Item 1: Follow up with client",
+                "Action Item 2: Prepare financial report"
+            ],
+            "sentiment": "Positive"
+        })
+
+    @action(detail=False, methods=['post'])
+    def analyze_finance(self, request):
+        """
+        Analyze Finance transactions and summary.
+        """
+        # Mock Response
+        return Response({
+            "analysis": "Financial health looks stable based on recent transactions.",
+            "predictions": "Revenue is projected to grow by 5% next quarter.",
+            "anomalies": ["None detected"]
+        })

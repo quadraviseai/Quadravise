@@ -51,7 +51,7 @@ export default function CRMLayout() {
 
       {/* MAIN CONTENT */}
       <main
-        className="ml-[72px] mt-16 h-[calc(100vh-64px)] overflow-y-auto transition-all duration-300 bg-white"
+        className="ml-[72px] mt-16 h-[calc(100vh-64px)] overflow-y-auto transition-all duration-300 bg-neutral-100 p-6"
         style={{ marginLeft: sidebarWidth }}
       >
         <Routes>

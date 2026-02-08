@@ -53,7 +53,8 @@ export default function UsersPage() {
             }));
 
             setUsers(enrichedData);
-        } catch (error) {message.error("Failed to load users from server");
+        } catch (error) {
+            message.error("Failed to load users from server");
             setUsers([]); // Clear users on error instead of using dummy data
         } finally {
             setLoading(false);
@@ -174,35 +175,27 @@ export default function UsersPage() {
                 message.success("User updated successfully");
             } else {
                 // CREATE NEW USER
-                const newUser = {
-                    id: Date.now(), // Mock ID
+                const newUserPayload = {
                     first_name: formData.firstName.trim(),
                     last_name: formData.lastName.trim(),
                     email: formData.email,
-                    phone: formData.phone,
-                    department: formData.department,
+                    phone: formData.phone, // Ensure backend model has phone field or remove if not
                     role: formData.role,
                     is_active: formData.active,
-                    mfaEnabled: formData.mfaEnabled,
-                    canExportData: formData.canExportData,
-                    canDeleteRecords: formData.canDeleteRecords,
-                    lastLogin: "Never",
-                    activityScore: 0
+                    password: formData.password
+                    // access/permissions handling if needed
                 };
 
-                // API call would be here
-                // const { data } = await api.post("/auth/users/", {
-                //     ...newUser,
-                //     password: formData.password
-                // });
+                const createdUser = await usersAPI.createUser(newUserPayload);
 
                 // Update local state
-                setUsers([newUser, ...users]);
+                setUsers([createdUser, ...users]);
                 message.success("User created successfully");
             }
 
             resetForm();
-        } catch (error) {message.error(`Failed to ${editingUserId ? "update" : "create"} user`);
+        } catch (error) {
+            message.error(`Failed to ${editingUserId ? "update" : "create"} user`);
         }
     };
 

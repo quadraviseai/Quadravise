@@ -28,7 +28,7 @@ class LoginSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'first_name', 'last_name', 'role', 'is_active', 'is_staff']
+        fields = ['id', 'email', 'first_name', 'last_name', 'phone', 'department', 'role', 'is_active', 'is_staff']
 
 class ForgotPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -57,14 +57,11 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'password', 'first_name', 'last_name', 'role', 'is_active']
+        fields = ['id', 'email', 'password', 'first_name', 'last_name', 'phone', 'department', 'role', 'is_active']
 
     def create(self, validated_data):
         password = validated_data.pop('password')
         user = User.objects.create_user(password=password, **validated_data)
         return user
 
-    class Meta:
-        from .models import RolePermission
-        model = RolePermission
-        fields = ['role', 'modules']
+

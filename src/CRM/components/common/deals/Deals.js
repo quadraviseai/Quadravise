@@ -70,7 +70,8 @@ export default function DealsPage() {
         };
       });
       setColumns(newColumns);
-    } catch (error) {message.error("Failed to load deals");
+    } catch (error) {
+      message.error("Failed to load deals");
     } finally {
       setLoading(false);
     }
@@ -86,7 +87,8 @@ export default function DealsPage() {
       message.success("Deal created successfully");
       fetchDeals();
       setIsModalOpen(false);
-    } catch (error) {message.error("Failed to create deal");
+    } catch (error) {
+      message.error("Failed to create deal");
     }
   };
 
@@ -114,7 +116,8 @@ export default function DealsPage() {
       // 5. Refresh to update counts
       fetchDeals();
 
-    } catch (error) {message.error({ content: 'Failed to create task', key, duration: 3 });
+    } catch (error) {
+      message.error({ content: 'Failed to create task', key, duration: 3 });
     }
   };
 
@@ -142,11 +145,12 @@ export default function DealsPage() {
   const onDrop = async (e, toColId) => {
     e.preventDefault();
     const data = e.dataTransfer.getData("text/plain");
-    if (!data) {return;
+    if (!data) {
+      return;
     }
 
     try {
-      const { card, fromCol } = JSON.parse(data);if (fromCol === toColId) return;
+      const { card, fromCol } = JSON.parse(data); if (fromCol === toColId) return;
 
       // Optimistic UI Update
       setColumns((prev) => ({
@@ -164,7 +168,8 @@ export default function DealsPage() {
       // API Update
       await dealsAPI.updateDeal(card.id, { stage: toColId });
       message.success(`Deal moved to ${toColId}`);
-    } catch (error) {message.error("Failed to update deal stage");
+    } catch (error) {
+      message.error("Failed to update deal stage");
       fetchDeals(); // Revert on failure
     }
   };
@@ -206,7 +211,7 @@ export default function DealsPage() {
   if (loading) return <div className="flex justify-center items-center h-64"><Spin size="large" /></div>;
 
   return (
-    <div className="flex flex-col h-[calc(100vh-80px)] overflow-hidden">
+    <div className="flex flex-col h-full overflow-hidden">
       {/* HEADER */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
