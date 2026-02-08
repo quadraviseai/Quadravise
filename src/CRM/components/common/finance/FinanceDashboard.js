@@ -39,9 +39,7 @@ export default function FinanceDashboard() {
             const summ = await financeService.getFinanceSummary();
             setData(response);
             setSummary(summ);
-        } catch (error) {
-            console.error('Failed to fetch finance data:', error);
-        } finally {
+        } catch (error) {} finally {
             setLoading(false);
         }
     }, [page, searchQuery, period]);
@@ -51,9 +49,7 @@ export default function FinanceDashboard() {
         try {
             const auditData = await financeService.getAllFinanceAudits();
             setAudits(auditData);
-        } catch (error) {
-            console.error('Failed to fetch audits:', error);
-        } finally {
+        } catch (error) {} finally {
             setAuditsLoading(false);
         }
     }, []);
@@ -79,9 +75,7 @@ export default function FinanceDashboard() {
             await fetchAudits();
 
             // Close modal is handled by the modal child calling onClose
-        } catch (error) {
-            console.error('Failed to save transaction:', error);
-            alert('Failed to save transaction. Please check your inputs and mandatory comments.');
+        } catch (error) {alert('Failed to save transaction. Please check your inputs and mandatory comments.');
         }
     };
 
@@ -93,9 +87,7 @@ export default function FinanceDashboard() {
             setDeletingTransaction(null);
             fetchData();
             fetchAudits();
-        } catch (error) {
-            console.error('Failed to delete transaction:', error);
-            alert('Failed to delete transaction. A comment is mandatory for this action.');
+        } catch (error) {alert('Failed to delete transaction. A comment is mandatory for this action.');
         }
     };
 

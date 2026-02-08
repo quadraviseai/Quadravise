@@ -70,9 +70,7 @@ export default function DealsPage() {
         };
       });
       setColumns(newColumns);
-    } catch (error) {
-      console.error("Error fetching deals:", error);
-      message.error("Failed to load deals");
+    } catch (error) {message.error("Failed to load deals");
     } finally {
       setLoading(false);
     }
@@ -88,9 +86,7 @@ export default function DealsPage() {
       message.success("Deal created successfully");
       fetchDeals();
       setIsModalOpen(false);
-    } catch (error) {
-      console.error("Error creating deal:", error);
-      message.error("Failed to create deal");
+    } catch (error) {message.error("Failed to create deal");
     }
   };
 
@@ -118,9 +114,7 @@ export default function DealsPage() {
       // 5. Refresh to update counts
       fetchDeals();
 
-    } catch (error) {
-      console.error("Error creating task:", error);
-      message.error({ content: 'Failed to create task', key, duration: 3 });
+    } catch (error) {message.error({ content: 'Failed to create task', key, duration: 3 });
     }
   };
 
@@ -148,16 +142,11 @@ export default function DealsPage() {
   const onDrop = async (e, toColId) => {
     e.preventDefault();
     const data = e.dataTransfer.getData("text/plain");
-    if (!data) {
-      console.warn("[DealsPage] Drop attempted without data");
-      return;
+    if (!data) {return;
     }
 
     try {
-      const { card, fromCol } = JSON.parse(data);
-      console.log(`[DealsPage] Moving deal ${card.id} from ${fromCol} to ${toColId}`);
-
-      if (fromCol === toColId) return;
+      const { card, fromCol } = JSON.parse(data);if (fromCol === toColId) return;
 
       // Optimistic UI Update
       setColumns((prev) => ({
@@ -175,9 +164,7 @@ export default function DealsPage() {
       // API Update
       await dealsAPI.updateDeal(card.id, { stage: toColId });
       message.success(`Deal moved to ${toColId}`);
-    } catch (error) {
-      console.error("[DealsPage] Error moving deal:", error);
-      message.error("Failed to update deal stage");
+    } catch (error) {message.error("Failed to update deal stage");
       fetchDeals(); // Revert on failure
     }
   };

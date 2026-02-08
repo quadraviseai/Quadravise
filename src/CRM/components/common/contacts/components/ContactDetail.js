@@ -44,9 +44,7 @@ export default function ContactDetail({ contact, onEdit }) {
     try {
       const data = await contactsAPI.getTimeline(contact.id);
       setActivities(data);
-    } catch (error) {
-      console.error('Error fetching timeline:', error);
-    } finally {
+    } catch (error) {} finally {
       setLoadingTimeline(false);
     }
   };
@@ -55,9 +53,7 @@ export default function ContactDetail({ contact, onEdit }) {
     try {
       const data = await contactsAPI.getNotes(contact.id);
       setNotes(data);
-    } catch (error) {
-      console.error('Error fetching notes:', error);
-    }
+    } catch (error) {}
   };
 
   const handleAddNote = async (type = 'note') => {
@@ -87,9 +83,7 @@ export default function ContactDetail({ contact, onEdit }) {
       fetchNotes();
       fetchTimeline();
       message.success(`${type.charAt(0).toUpperCase() + type.slice(1)} added successfully`);
-    } catch (error) {
-      console.error(`Error adding ${type}:`, error);
-      message.error(`Failed to add ${type}`);
+    } catch (error) {message.error(`Failed to add ${type}`);
     }
   };
 
@@ -106,9 +100,7 @@ export default function ContactDetail({ contact, onEdit }) {
           "Schedule technical deep-dive with the architecture team"
         ]
       });
-    } catch (error) {
-      console.error('Error analyzing with AI:', error);
-    } finally {
+    } catch (error) {} finally {
       setIsAnalyzing(false);
     }
   };
@@ -127,9 +119,7 @@ export default function ContactDetail({ contact, onEdit }) {
         ...prev,
         tasks: prev.tasks.filter(t => t !== taskTitle)
       }));
-    } catch (error) {
-      console.error('Error creating task:', error);
-      message.error('Failed to create task');
+    } catch (error) {message.error('Failed to create task');
     }
   };
 

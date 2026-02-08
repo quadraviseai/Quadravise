@@ -29,9 +29,7 @@ export default function TaskBoard({ columns, tasks, onUpdateStatus, onEdit, onDe
             if (fromStatus !== newStatus) {
                 onUpdateStatus(taskId, newStatus);
             }
-        } catch (error) {
-            console.error("[TaskBoard] Drop error:", error);
-        }
+        } catch (error) {}
     };
 
     return (

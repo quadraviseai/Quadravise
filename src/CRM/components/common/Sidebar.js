@@ -24,7 +24,7 @@ import {
  */
 export default function Sidebar({ collapsed, onToggle }) {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [permissionsLoaded, setPermissionsLoaded] = useState(0);
 
   // Re-check permissions when they might have changed
@@ -147,7 +147,7 @@ export default function Sidebar({ collapsed, onToggle }) {
 
       {/* Sign Out Section */}
       <div className={styles.footer}>
-        <button className={styles.signOutBtn} onClick={() => console.log("Logout")}>
+        <button className={styles.signOutBtn} onClick={logout}>
           <span className={styles.navIcon}><LogoutOutlined /></span>
           {!collapsed && <span className={styles.navLabel}>SIGN OUT</span>}
         </button>

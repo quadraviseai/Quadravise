@@ -26,9 +26,7 @@ export default function FinanceProjections({ transactions, summary }) {
                     setProjections(latest.report_data);
                     setLastUpdated(latest.created_at);
                 }
-            } catch (err) {
-                console.error('Failed to load latest projection:', err);
-            } finally {
+            } catch (err) {} finally {
                 setLoading(false);
             }
         };
@@ -54,9 +52,7 @@ export default function FinanceProjections({ transactions, summary }) {
             // 3. Update state
             setProjections(saved.report_data);
             setLastUpdated(saved.created_at);
-        } catch (err) {
-            console.error('Failed to generate AI projections:', err);
-            setError('The AI service is currently busy or unavailable. Using cached report if available.');
+        } catch (err) {setError('The AI service is currently busy or unavailable. Using cached report if available.');
         } finally {
             setGenerating(false);
         }

@@ -81,9 +81,7 @@ export default function CreateAccountModal({ isOpen, onClose, onSubmit, initialD
                 });
             }
             onClose();
-        } catch (error) {
-            console.error("Error in form submission:", error);
-        } finally {
+        } catch (error) {} finally {
             setLoading(false);
         }
     };

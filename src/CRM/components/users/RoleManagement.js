@@ -26,9 +26,7 @@ export default function RoleManagement() {
         try {
             const data = await permissionService.getAllPermissions();
             setPermissions(data);
-        } catch (error) {
-            console.error("Failed to load permissions", error);
-            message.error("Failed to load permissions");
+        } catch (error) {message.error("Failed to load permissions");
             // Ensure permissions is always an object to prevent crashes
             setPermissions({});
         } finally {

@@ -37,33 +37,18 @@ export default function ContactUsPage() {
       email: formData.email,
       phone: formData.phone,
       message: formData.message,
-    };
-
-    console.log("Sending payload:", payload);
-
-    try {
-      const res = await fetch(
-        "https://quadravise.com/api/submit_contact_form.php",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
-
-      console.log("Response status:", res.status);
-
-      if (!res.ok) {
-        const errBody = await res.text();
-        console.log("Error response:", errBody);
-        throw new Error(`Server error: ${res.status}`);
+    };try {
+      const res = await fetch("/api/v1/marketing/contact/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });if (!res.ok) {
+        const errBody = await res.text();throw new Error(`Server error: ${res.status}`);
       }
 
       setIsSubmitted(true);
       setFormData({ name: "", email: "", phone: "", message: "" });
-    } catch (err) {
-      console.error("Submit error:", err);
-      setError(err.message || "Failed to send message. Please try again.");
+    } catch (err) {setError(err.message || "Failed to send message. Please try again.");
     } finally {
       setIsLoading(false);
     }
