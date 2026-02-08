@@ -29,6 +29,7 @@ import BpoKpoPage from "./pages/Services/BpoKpoPage";
 /* Auth */
 import Login from "./pages/Login/Login";
 import ForgotPassword from "./pages/Login/ForgotPassword";
+import ResetPassword from "./pages/Login/ResetPassword";
 
 /* CRM */
 import CRMLayout from "./CRM/CRMLayout";
@@ -51,10 +52,12 @@ export default function App() {
   const noLayoutRoutes = [
     "/secure-login",
     "/forgot-password",
+    "/reset-password",
     "/login-1",
     "/login-2",
     "/login-3",
     "/login-4",
+    "/login",
     "/login-5",
   ];
 
@@ -72,7 +75,9 @@ export default function App() {
           <Routes location={location} key={location.pathname}>
             {/* Auth */}
             <Route path="/secure-login" element={<Login />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
 
             {/* Creative Login Pages */}
             <Route path="/login-1" element={<LoginPageOne />} />

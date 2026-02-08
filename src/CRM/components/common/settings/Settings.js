@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Card from "../../ui/Card";
-import Button from "../../ui/Button";
-import Input from "../../ui/Input";
+import Button from "../../../../components/ui/Button";
+import Input from "../../../../components/ui/Input";
 
 export default function SettingsPage() {
   const [profile, setProfile] = useState({

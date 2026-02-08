@@ -1,57 +1,157 @@
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
+import styles from "./Sidebar.module.css";
+import permissionService from "../../../services/permissionService";
+import {
+  AppstoreOutlined,
+  BankOutlined,
+  TeamOutlined,
+  SwapOutlined,
+  CheckSquareOutlined,
+  UserOutlined,
+  SettingOutlined,
+  HeartOutlined,
+  LogoutOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  SafetyCertificateOutlined
+} from '@ant-design/icons';
 
-export default function Sidebar({ collapsed }) {
+/**
+ * Premium Sidebar Component matching the reference image.
+ * Dark theme, Green accents.
+ */
+export default function Sidebar({ collapsed, onToggle }) {
   const location = useLocation();
+  const { user } = useAuth();
+  const [permissionsLoaded, setPermissionsLoaded] = useState(0);
 
-  const navItems = [
-    { path: "/crm", label: "Dashboard" },
-    { path: "/crm/accounts", label: "Accounts" },
-    { path: "/crm/contacts", label: "Contacts" },
-    { path: "/crm/deals", label: "Deals" },
-    { path: "/crm/tasks", label: "Tasks" },
+  // Re-check permissions when they might have changed
+  // (Triggering rebuild to ensure imports are picked up)
+  useEffect(() => {
+    const handleUpdate = () => setPermissionsLoaded(n => n + 1);
+    window.addEventListener('permissions-updated', handleUpdate);
+    return () => window.removeEventListener('permissions-updated', handleUpdate);
+  }, []);
+
+  // Define Navigation Sections
+  const navSections = [
+    {
+      title: "MAIN MENU",
+      items: [
+        { path: "/crm", label: "Dashboard", icon: <AppstoreOutlined />, key: 'dashboard' },
+      ]
+    },
+    {
+      title: "CRM",
+      items: [
+        { path: "/crm/accounts", label: "Accounts", icon: <BankOutlined />, key: 'accounts' },
+        { path: "/crm/contacts", label: "Contacts", icon: <TeamOutlined />, key: 'contacts' },
+        { path: "/crm/deals", label: "Deals", icon: <SwapOutlined />, key: 'deals' },
+        { path: "/crm/tasks", label: "Tasks", icon: <CheckSquareOutlined />, key: 'tasks' },
+      ]
+    },
+    {
+      title: "FINANCE",
+      items: [
+        { path: "/crm/finance", label: "Finance", icon: <BankOutlined />, key: 'finance' },
+      ]
+    },
+    {
+      title: "ADMINISTRATION",
+      items: [
+        { path: "/crm/users", label: "User Management", icon: <UserOutlined />, key: 'users' },
+        { path: "/crm/roles", label: "Role Management", icon: <SafetyCertificateOutlined />, key: 'roles' },
+        { path: "/crm/config", label: "Config", icon: <SettingOutlined />, key: 'config' },
+        { path: "/crm/sys-health", label: "System Health", icon: <HeartOutlined />, key: 'health' },
+      ]
+    }
   ];
 
   return (
-    <aside className="flex h-full flex-col border-r border-neutral-200 bg-white">
-      {/* NAV */}
-      <nav className="flex-1 px-2 py-4">
-        <ul className="space-y-1">
-          {navItems.map((item) => {
-            const isActive =
-              location.pathname === item.path ||
-              location.pathname.startsWith(item.path + "/");
+    <aside className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
+      {/* Brand Section */}
+      <div className={styles.brandSection}>
+        {collapsed ? (
+          // Collapsed: Logo acts as Expand Button
+          <button
+            className={styles.logoBtn}
+            onClick={onToggle}
+            title="Expand Sidebar"
+          >
+            <img src="/logo01.png" alt="Q" className={styles.logoImage} />
+          </button>
+        ) : (
+          // Expanded: Show Logo + Collapse Button
+          <>
+            <div className={styles.brandLogo}>
+              <img src="/logo01.png" alt="Quadravise" className={styles.logoImage} />
+              <div className={styles.brandText}>
+                <div className={styles.brandName}>Quadravise</div>
+                <div className={styles.brandTagline}>CRM Suite</div>
+              </div>
+            </div>
 
-            return (
-              <li key={item.path}>
-                <Link
-                  to={item.path}
-                  className={`flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors
-                    ${
-                      isActive
-                        ? "bg-neutral-100 text-black"
-                        : "text-neutral-600 hover:bg-neutral-100 hover:text-black"
-                    }
-                  `}
-                >
-                  {/* Icon placeholder (future-safe) */}
-                  <span className="mr-3 flex h-5 w-5 items-center justify-center rounded bg-neutral-200 text-xs font-semibold text-neutral-600">
-                    {item.label[0]}
-                  </span>
+            <button
+              className={styles.toggleBtn}
+              onClick={onToggle}
+              title="Collapse Sidebar"
+            >
+              <MenuFoldOutlined />
+            </button>
+          </>
+        )}
+      </div>
 
-                  {!collapsed && <span>{item.label}</span>}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+      {/* Navigation */}
+      <nav className={styles.nav}>
+        {navSections.map((section) => {
+          // Filter items by permission
+          const filteredItems = section.items.filter(item => user && permissionService.hasAccess(user.role, item.key));
+
+          if (filteredItems.length === 0) return null;
+
+          return (
+            <div key={section.title} className={styles.navSection}>
+              {!collapsed && <h3 className={styles.sectionHeader}>{section.title}</h3>}
+              <ul className={styles.navList}>
+                {filteredItems.map((item) => {
+                  const isActive = item.path === "/crm"
+                    ? location.pathname === "/crm" || location.pathname === "/crm/"
+                    : location.pathname === item.path || location.pathname.startsWith(item.path + "/");
+
+                  return (
+                    <li key={item.label} className={styles.navItem}>
+                      <Link
+                        to={item.path}
+                        className={`${styles.navLink} ${isActive ? styles.navLinkActive : ''}`}
+                        title={collapsed ? item.label : undefined}
+                      >
+                        <span className={styles.navIcon}>{item.icon}</span>
+                        {!collapsed && (
+                          <>
+                            <span className={styles.navLabel}>{item.label}</span>
+                            {item.badge && <span className={styles.navBadge}>{item.badge}</span>}
+                          </>
+                        )}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          );
+        })}
       </nav>
 
-      {/* FOOTER */}
-      {!collapsed && (
-        <div className="border-t border-neutral-200 px-4 py-3 text-xs text-neutral-500">
-          © 2025 Quadravise CRM
-        </div>
-      )}
+      {/* Sign Out Section */}
+      <div className={styles.footer}>
+        <button className={styles.signOutBtn} onClick={() => console.log("Logout")}>
+          <span className={styles.navIcon}><LogoutOutlined /></span>
+          {!collapsed && <span className={styles.navLabel}>SIGN OUT</span>}
+        </button>
+      </div>
     </aside>
   );
 }
