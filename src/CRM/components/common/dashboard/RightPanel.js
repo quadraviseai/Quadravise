@@ -1,27 +1,41 @@
+import styles from './Dashboard.module.css';
+
 const activities = [
-  { text: "Called John Doe", time: "2 minutes ago" },
-  { text: "Meeting with Alice", time: "15 minutes ago" },
-  { text: "Completed task: Send proposal", time: "1 hour ago" },
-  { text: "Closed deal with Acme Corp", time: "3 hours ago" },
+  { text: "New lead added: Tech Solutions Inc", time: "2 minutes ago", type: "blue" },
+  { text: "Meeting scheduled with Alice Johnson", time: "15 minutes ago", type: "purple" },
+  { text: "Deal closed: Acme Corp - ₹2.5L", time: "1 hour ago", type: "green" },
+  { text: "Task completed: Send proposal to client", time: "2 hours ago", type: "orange" },
+  { text: "Follow-up call with John Doe", time: "3 hours ago", type: "blue" },
 ];
 
+/**
+ * Enhanced Activity Timeline Panel
+ */
 export default function RightPanel() {
-  return (
-    <div className="space-y-3">
-      {activities.map((item, idx) => (
-        <div
-          key={idx}
-          className="flex items-start gap-3 rounded-lg border border-neutral-200 bg-white px-3 py-2"
-        >
-          {/* Timeline dot */}
-          <span className="mt-1 h-2 w-2 flex-shrink-0 rounded-full bg-neutral-400" />
+  const getDotClass = (type) => {
+    const classes = {
+      blue: styles.activityDotBlue,
+      green: styles.activityDotGreen,
+      orange: styles.activityDotOrange,
+      purple: styles.activityDotPurple,
+    };
+    return `${styles.activityDot} ${classes[type] || classes.blue}`;
+  };
 
-          <div className="flex-1">
-            <p className="text-sm text-neutral-800">{item.text}</p>
-            <p className="mt-0.5 text-xs text-neutral-400">{item.time}</p>
+  return (
+    <div className={styles.activityTimeline}>
+      <h2 className={styles.panelTitle}>Recent Activity</h2>
+      <div className="space-y-2">
+        {activities.map((item, idx) => (
+          <div key={idx} className={styles.activityItem}>
+            <div className={getDotClass(item.type)} />
+            <div className={styles.activityContent}>
+              <p className={styles.activityText}>{item.text}</p>
+              <p className={styles.activityTime}>{item.time}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

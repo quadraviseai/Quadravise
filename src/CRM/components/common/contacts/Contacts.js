@@ -1,160 +1,107 @@
-import { useState } from "react";
-import Button from "../../../../components/ui/Button";
-import Input from "../../../../components/ui/Input";
+import { useState, useEffect } from "react";
+import { message } from "antd";
+import ContactList from "./components/ContactList";
+import ContactDetail from "./components/ContactDetail";
+import CreateContactModal from "./components/CreateContactModal";
+import contactsAPI from "../../../../services/contactsAPI";
 
 export default function ContactsPage() {
-  const [contacts, setContacts] = useState([
-    {
-      id: "1",
-      name: "Virat Kohli",
-      role: "CEO",
-      company: "Sports Inc.",
-      status: "Active",
-    },
-    {
-      id: "2",
-      name: "Elena D’Costa",
-      role: "CTO",
-      company: "Techify",
-      status: "Away",
-    },
-  ]);
+  const [contacts, setContacts] = useState([]);
+  const [selectedContactId, setSelectedContactId] = useState(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const [showModal, setShowModal] = useState(false);
-  const [draft, setDraft] = useState({
-    name: "",
-    role: "",
-    company: "",
-    status: "Active",
-  });
+  useEffect(() => {
+    fetchContacts();
+  }, []);
 
-  function addContact() {
-    if (!draft.name.trim()) return;
+  const fetchContacts = async () => {
+    try {
+      setLoading(true);
+      const data = await contactsAPI.getContacts();
+      // Handle pagination result { count, results: [] } or array
+      const contactList = data.results || data;
+      setContacts(contactList);
 
-    setContacts([{ id: Date.now().toString(), ...draft }, ...contacts]);
+      // Select first contact if none selected
+      if (contactList.length > 0 && !selectedContactId) {
+        setSelectedContactId(contactList[0].id);
+      }
+    } catch (error) {
+      console.error("Error fetching contacts:", error);
+      message.error("Failed to load contacts");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    setDraft({ name: "", role: "", company: "", status: "Active" });
-    setShowModal(false);
-  }
+  const handleSaveContact = async (data) => {
+    try {
+      // Backend expects: name, title, email, phone, role, account
+      // Modal might provide firstName + lastName, so combine them
+      const payload = {
+        name: data.name || `${data.firstName || ''} ${data.lastName || ''}`.trim(),
+        title: data.title || data.jobTitle || '',
+        email: data.email || '',
+        phone: data.phone || '',
+        role: data.role || '',
+        account: data.account || data.company_id || null
+      };
+
+      if (isEditing && selectedContactId) {
+        const updatedContact = await contactsAPI.updateContact(selectedContactId, payload);
+        message.success("Contact updated successfully");
+        setContacts(contacts.map(c => c.id === selectedContactId ? updatedContact : c));
+      } else {
+        const newContact = await contactsAPI.createContact(payload);
+        message.success("Contact created successfully");
+        setContacts([newContact, ...contacts]);
+        setSelectedContactId(newContact.id);
+      }
+      setIsCreateModalOpen(false);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error saving contact:", error);
+      message.error(`Failed to ${isEditing ? 'update' : 'create'} contact`);
+    }
+  };
+
+  const selectedContact = contacts.find(c => c.id === selectedContactId);
 
   return (
-    <div className="space-y-6">
-      {/* HEADER */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-semibold text-black">Contacts</h1>
-          <p className="text-sm text-neutral-500">
-            People associated with your accounts and deals
-          </p>
-        </div>
+    <div className="flex h-[calc(100vh-64px)] overflow-hidden bg-white p-4 gap-4 font-lato">
+      {/* Sidebar List */}
+      <ContactList
+        contacts={contacts}
+        selectedId={selectedContactId}
+        onSelect={setSelectedContactId}
+        onCreate={() => {
+          setIsEditing(false);
+          setIsCreateModalOpen(true);
+        }}
+      />
 
-        <Button onClick={() => setShowModal(true)}>Add Contact</Button>
+      {/* Main Detail Area */}
+      <div className="flex-1 min-w-0">
+        <ContactDetail
+          contact={selectedContact}
+          onEdit={() => {
+            setIsEditing(true);
+            setIsCreateModalOpen(true);
+          }}
+        />
       </div>
 
-      {/* TABLE */}
-      <div className="overflow-x-auto rounded-xl border border-neutral-200 bg-white">
-        <table className="w-full text-sm">
-          <thead className="bg-neutral-50">
-            <tr>
-              <th className="px-4 py-3 text-left font-medium">Name</th>
-              <th className="px-4 py-3 text-left font-medium">Role</th>
-              <th className="px-4 py-3 text-left font-medium">Company</th>
-              <th className="px-4 py-3 text-left font-medium">Status</th>
-              <th className="px-4 py-3 text-left font-medium">Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {contacts.length === 0 ? (
-              <tr>
-                <td
-                  colSpan={5}
-                  className="px-4 py-8 text-center text-neutral-500"
-                >
-                  No contacts found
-                </td>
-              </tr>
-            ) : (
-              contacts.map((c) => (
-                <tr key={c.id} className="border-t border-neutral-200">
-                  <td className="px-4 py-3 font-medium">{c.name}</td>
-                  <td className="px-4 py-3">{c.role}</td>
-                  <td className="px-4 py-3">{c.company}</td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`rounded-full px-3 py-1 text-xs font-medium ${
-                        c.status === "Active"
-                          ? "bg-green-100 text-green-700"
-                          : c.status === "Away"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {c.status}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 space-x-3">
-                    <button className="text-sm text-blue-600 hover:underline">
-                      Message
-                    </button>
-                    <button className="text-sm text-neutral-600 hover:underline">
-                      Call
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      {/* ADD CONTACT MODAL */}
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg">
-            <h2 className="mb-4 text-lg font-semibold">Add Contact</h2>
-
-            <div className="space-y-3">
-              <Input
-                placeholder="Name"
-                value={draft.name}
-                onChange={(e) => setDraft({ ...draft, name: e.target.value })}
-              />
-              <Input
-                placeholder="Role"
-                value={draft.role}
-                onChange={(e) => setDraft({ ...draft, role: e.target.value })}
-              />
-              <Input
-                placeholder="Company"
-                value={draft.company}
-                onChange={(e) =>
-                  setDraft({ ...draft, company: e.target.value })
-                }
-              />
-              <select
-                value={draft.status}
-                onChange={(e) => setDraft({ ...draft, status: e.target.value })}
-                className="h-10 w-full rounded-lg border border-neutral-200 px-3 text-sm"
-              >
-                <option value="Active">Active</option>
-                <option value="Away">Away</option>
-                <option value="Busy">Busy</option>
-              </select>
-            </div>
-
-            <div className="mt-6 flex justify-end gap-2">
-              <button
-                onClick={() => setShowModal(false)}
-                className="text-sm text-neutral-600"
-              >
-                Cancel
-              </button>
-              <Button onClick={addContact}>Save Contact</Button>
-            </div>
-          </div>
-        </div>
-      )}
+      <CreateContactModal
+        isOpen={isCreateModalOpen}
+        onClose={() => {
+          setIsCreateModalOpen(false);
+          setIsEditing(false);
+        }}
+        onSubmit={handleSaveContact}
+        contact={isEditing ? selectedContact : null}
+      />
     </div>
   );
 }

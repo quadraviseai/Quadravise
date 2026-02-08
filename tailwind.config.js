@@ -26,6 +26,7 @@ export default {
       },
       fontFamily: {
         corporate: ["Inter", "system-ui", "sans-serif"],
+        lato: ["Lato", "sans-serif"],
       },
       animation: {
         "fade-in-up": "fadeInUp 0.6s ease-out",
